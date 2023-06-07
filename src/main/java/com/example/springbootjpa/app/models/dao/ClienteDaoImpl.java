@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository("clienteDaoJPA")
-public class ClienteDaoImpl implements IClienteDao{
+public class ClienteDaoImpl implements IClienteDao {
 
     @PersistenceContext // De forma automática inyecta el EntityManager según la configuración de la unidad de persistencia que contiene el proveedor JPA
     private EntityManager em; //Se encarga de manejar las clases de entidades, todas las operaciones a la BD, son consultas de JPA
@@ -19,6 +19,12 @@ public class ClienteDaoImpl implements IClienteDao{
     @Override
     public List<Cliente> findAll() {
         return em.createQuery("from Cliente").getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void save(Cliente cliente) {
+        em.persist(cliente);
     }
 
 
